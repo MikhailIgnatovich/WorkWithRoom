@@ -4,4 +4,11 @@
     <string name="catalog_categories">КФТЕГОРИИ</string>
     <string name="catalog_products">ТОВАРЫ</string>
     <string name="catalog_clothes">ОДЕЖДА</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="addCategory">ДОБАВИТЬ КАТЕГОРИЮ</string>
+    <string name="shoes">ОБУВЬ</string>
+    <string name="accessories">АКСЕССУАРЫ</string>
+    <string name="addProduct">ДОБАВИТЬ ТОВАР</string>
+    <string name="labelEnterNameProduct">Введите название товара</string>
 </resources>

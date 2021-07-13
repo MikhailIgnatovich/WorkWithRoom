@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".tabs.Panel">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/headerAddCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/orange"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="20dp"
+            android:text="@string/addCategory"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonAddCategoryClothes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/catalog_clothes"
+            app:layout_constraintTop_toBottomOf="@id/headerAddCategory"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/black"
+            android:background="@color/orange"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonAddCategoryShoes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/shoes"
+            app:layout_constraintTop_toBottomOf="@id/buttonAddCategoryClothes"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
+            android:background="@color/orange"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonAddCategoryAccessories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/accessories"
+            app:layout_constraintTop_toBottomOf="@id/buttonAddCategoryShoes"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
+            android:background="@color/orange"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/headerAddProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/buttonAddCategoryAccessories"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="60dp"
+            android:text="@string/addProduct"
+            android:textColor="@color/orange"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/sectionEnterCategoryProduct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/headerAddProduct"
+            android:layout_marginTop="10dp"
+            app:boxBackgroundColor="@android:color/transparent"
+            app:boxStrokeColor="@color/white"
+            app:startIconTint="@android:color/white"
+            app:endIconTint="@android:color/holo_red_light"
+            android:hint="@string/labelEnterNameProduct"
+            app:hintTextColor="@android:color/white"
+            app:startIconDrawable="@drawable/catalog_categories"
+            app:endIconMode="clear_text"
+            app:boxStrokeWidthFocused="4dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/enterNameProduct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:inputType="text"
+                android:textCursorDrawable="@drawable/cursor"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
+</layout>
