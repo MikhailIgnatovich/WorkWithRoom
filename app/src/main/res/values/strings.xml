@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">WorkWithRoom</string>
+    <string name="panel">ПАНЕЛЬ</string>
+    <string name="catalog_categories">КФТЕГОРИИ</string>
+    <string name="catalog_products">ТОВАРЫ</string>
+    <string name="catalog_clothes">ОДЕЖДА</string>
 </resources>
