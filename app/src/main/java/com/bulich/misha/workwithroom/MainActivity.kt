@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.bulich.misha.workwithroom.databinding.ActivityMainBinding
+import com.bulich.misha.workwithroom.tabs.Panel
 
 class MainActivity : AppCompatActivity() {
 
@@ -12,6 +13,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        supportFragmentManager.beginTransaction().replace(R.id.content, Panel()).commit()
 
     }
 }
