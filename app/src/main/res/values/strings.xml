@@ -16,4 +16,5 @@
     <string name="deleteAllCategories">УДАЛИТЬ ВСЕ КАТЕГОРИИ</string>
     <string name="editCategory">РУДАКТИРОВАНИЕ КАТЕГОРИИ</string>
     <string name="labelEnterCategory">Ввкдите название категории</string>
+    <string name="deleteAllProducts">УДАЛИТЬ ВСЕ ТОВАРЫ</string>
 </resources>
