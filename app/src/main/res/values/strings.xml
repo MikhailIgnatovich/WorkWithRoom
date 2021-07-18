@@ -14,4 +14,6 @@
     <string name="labelEnterNumberCategory">Введите номер категории</string>
     <string name="labelEnterPriceProduct">Введите цену товара</string>
     <string name="deleteAllCategories">УДАЛИТЬ ВСЕ КАТЕГОРИИ</string>
+    <string name="editCategory">РУДАКТИРОВАНИЕ КАТЕГОРИИ</string>
+    <string name="labelEnterCategory">Ввкдите название категории</string>
 </resources>
