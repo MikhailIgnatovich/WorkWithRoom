@@ -17,4 +17,5 @@
     <string name="editCategory">РУДАКТИРОВАНИЕ КАТЕГОРИИ</string>
     <string name="labelEnterCategory">Ввкдите название категории</string>
     <string name="deleteAllProducts">УДАЛИТЬ ВСЕ ТОВАРЫ</string>
+    <string name="editProduct">РЕДАКТИРОВАНИЕ ТОВАРА</string>
 </resources>
