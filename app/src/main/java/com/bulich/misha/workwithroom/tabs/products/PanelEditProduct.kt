@@ -1,6 +1,7 @@
 package com.bulich.misha.workwithroom.tabs.products
 
 import android.os.Bundle
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +16,7 @@ import com.bulich.misha.workwithroom.db.ProductsRepository
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
-class PanelEditProduct : BottomSheetDialogFragment(), View.OnClickListener {
+class PanelEditProduct : BottomSheetDialogFragment(), View.OnClickListener, View.OnKeyListener {
 
     private var binding: PanelEditProductBinding? = null
     private var productRepository: ProductsRepository? = null
@@ -44,6 +45,10 @@ class PanelEditProduct : BottomSheetDialogFragment(), View.OnClickListener {
 
         binding?.buttonEditProduct?.setOnClickListener(this)
 
+        binding?.editNameProduct?.setOnKeyListener(this)
+        binding?.editCategoryProduct?.setOnKeyListener(this)
+        binding?.editPriceProduct?.setOnKeyListener(this)
+
 
 
         return binding?.root
@@ -61,6 +66,41 @@ class PanelEditProduct : BottomSheetDialogFragment(), View.OnClickListener {
 
         (context as FragmentActivity).supportFragmentManager.beginTransaction()
             .replace(R.id.content, CatalogProducts()).commit()
+    }
+
+    override fun onKey(v: View, keyCode: Int, event: KeyEvent): Boolean {
+        when (v.id) {
+            R.id.editNameProduct -> {
+                if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+
+                    binding?.resEditNameProduct?.text = binding?.editNameProduct?.text
+                    binding?.editNameProduct?.setText("")
+
+                    return true
+                }
+            }
+
+            R.id.editCategoryProduct -> {
+                if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+
+                    binding?.resEditCategoryProduct?.text = binding?.editCategoryProduct?.text
+                    binding?.editCategoryProduct?.setText("")
+
+                    return true
+                }
+            }
+
+            R.id.editPriceProduct -> {
+                if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+
+                    binding?.resEditPriceProduct?.text = binding?.editPriceProduct?.text
+                    binding?.editPriceProduct?.setText("")
+
+                    return true
+                }
+            }
+        }
+        return false
     }
 
 }
