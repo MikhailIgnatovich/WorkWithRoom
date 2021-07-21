@@ -62,14 +62,16 @@ class CatalogProducts : Fragment(), View.OnClickListener {
     }
 
     private fun editProduct(products: Products) {
-
+        val panelEditProduct = PanelEditProduct()
         val parameters = Bundle()
         parameters.putString("idProduct", products.id.toString())
         parameters.putString("nameProduct", products.name)
         parameters.putString("categoryProduct", products.category)
         parameters.putString("priceProduct", products.price)
 
+        panelEditProduct.arguments = parameters
 
+        panelEditProduct.show((context as FragmentActivity).supportFragmentManager, "editProduct")
 
     }
 
