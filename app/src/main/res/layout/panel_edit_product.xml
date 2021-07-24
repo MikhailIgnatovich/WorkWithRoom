@@ -48,6 +48,7 @@
                     android:id="@+id/editNameProduct"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/white"
                     android:inputType="text"
                     android:textCursorDrawable="@drawable/cursor" />
 
@@ -77,6 +78,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
+                    android:textColor="@color/white"
                     android:textCursorDrawable="@drawable/cursor" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -86,7 +88,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:hint="@string/labelEnterNumberCategory"
+                android:hint="@string/labelEnterPriceProduct"
                 android:textColorHint="@color/white"
                 app:boxBackgroundColor="@color/background"
                 app:boxStrokeColor="@color/white"
@@ -105,6 +107,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
+                    android:textColor="@color/white"
                     android:textCursorDrawable="@drawable/cursor" />
 
             </com.google.android.material.textfield.TextInputLayout>
