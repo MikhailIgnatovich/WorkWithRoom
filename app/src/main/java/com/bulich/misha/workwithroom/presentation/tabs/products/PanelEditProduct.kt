@@ -11,14 +11,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.bulich.misha.workwithroom.R
 import com.bulich.misha.workwithroom.databinding.PanelEditProductBinding
 import com.bulich.misha.workwithroom.data.db.ProductsDatabase
-import com.bulich.misha.workwithroom.data.db.ProductsRepository
+import com.bulich.misha.workwithroom.data.db.ProductsRepositoryIMPL
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
 class PanelEditProduct : BottomSheetDialogFragment(), View.OnClickListener, View.OnKeyListener {
 
     private var binding: PanelEditProductBinding? = null
-    private var productRepository: ProductsRepository? = null
+    private var productRepositoryIMPL: ProductsRepositoryIMPL? = null
     private var productsViewModel: ProductsViewModel? = null
     private var productsViewModelFactory: ProductsViewModelFactory? = null
     private var idProduct: Int? = null
@@ -37,8 +37,8 @@ class PanelEditProduct : BottomSheetDialogFragment(), View.OnClickListener, View
 
         val productDao =
             ProductsDatabase.getInstance((context as FragmentActivity).application).products()
-        productRepository = ProductsRepository(productDao)
-        productsViewModelFactory = ProductsViewModelFactory(productRepository!!)
+        productRepositoryIMPL = ProductsRepositoryIMPL(productDao)
+        productsViewModelFactory = ProductsViewModelFactory(productRepositoryIMPL!!)
         productsViewModel =
             ViewModelProvider(this, productsViewModelFactory!!).get(ProductsViewModel::class.java)
 

@@ -3,12 +3,12 @@ package com.bulich.misha.workwithroom.presentation.tabs.categories
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bulich.misha.workwithroom.data.db.Categories
-import com.bulich.misha.workwithroom.data.db.CategoriesRepository
+import com.bulich.misha.workwithroom.data.db.CategoriesRepositoryIMPL
 import kotlinx.coroutines.launch
 
-class CategoriesViewModel(private val categoriesRepository: CategoriesRepository) : ViewModel() {
+class CategoriesViewModel(private val categoriesRepositoryIMPL: CategoriesRepositoryIMPL) : ViewModel() {
 
-    val categories = categoriesRepository.categories
+    val categories = categoriesRepositoryIMPL.categories
 
     fun startInsert(nameCategories: String) {
         insert(Categories(0, nameCategories))
@@ -19,18 +19,18 @@ class CategoriesViewModel(private val categoriesRepository: CategoriesRepository
     }
 
     fun insert(categories: Categories) = viewModelScope.launch {
-        categoriesRepository.insertCategory(categories)
+        categoriesRepositoryIMPL.insertCategory(categories)
     }
 
     fun updateCategory(categories: Categories) = viewModelScope.launch {
-        categoriesRepository.updateCategory(categories)
+        categoriesRepositoryIMPL.updateCategory(categories)
     }
 
     fun deleteCategories(categories: Categories) = viewModelScope.launch {
-        categoriesRepository.deleteCategory(categories)
+        categoriesRepositoryIMPL.deleteCategory(categories)
     }
 
     fun deleteAllCategories() = viewModelScope.launch {
-        categoriesRepository.deleteAllCategories()
+        categoriesRepositoryIMPL.deleteAllCategories()
     }
 }

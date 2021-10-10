@@ -10,7 +10,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bulich.misha.workwithroom.R
 import com.bulich.misha.workwithroom.databinding.PanelEditCategoryBinding
-import com.bulich.misha.workwithroom.data.db.CategoriesRepository
+import com.bulich.misha.workwithroom.data.db.CategoriesRepositoryIMPL
 import com.bulich.misha.workwithroom.data.db.ProductsDatabase
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -18,7 +18,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 class PanelEditCategory : BottomSheetDialogFragment(), View.OnKeyListener {
 
     private var binding: PanelEditCategoryBinding? = null
-    private var categoriesRepository: CategoriesRepository? = null
+    private var categoriesRepositoryIMPL: CategoriesRepositoryIMPL? = null
     private var categoriesViewModel: CategoriesViewModel? = null
     private var idCategory: Int? = null
 
@@ -30,8 +30,8 @@ class PanelEditCategory : BottomSheetDialogFragment(), View.OnKeyListener {
         binding = DataBindingUtil.inflate(inflater, R.layout.panel_edit_category, container, false)
         val categoriesDao =
             ProductsDatabase.getInstance((context as FragmentActivity).application).categoriesDao()
-        categoriesRepository = CategoriesRepository(categoriesDao)
-        val factory = CategoriesViewModelFactory(categoriesRepository!!)
+        categoriesRepositoryIMPL = CategoriesRepositoryIMPL(categoriesDao)
+        val factory = CategoriesViewModelFactory(categoriesRepositoryIMPL!!)
         categoriesViewModel = ViewModelProvider(this, factory).get(CategoriesViewModel::class.java)
 
         binding?.editCategory?.setOnKeyListener(this)

@@ -14,7 +14,7 @@ import com.bulich.misha.workwithroom.R
 import com.bulich.misha.workwithroom.databinding.CatalogClothesBinding
 import com.bulich.misha.workwithroom.data.db.Products
 import com.bulich.misha.workwithroom.data.db.ProductsDatabase
-import com.bulich.misha.workwithroom.data.db.ProductsRepository
+import com.bulich.misha.workwithroom.data.db.ProductsRepositoryIMPL
 import com.bulich.misha.workwithroom.presentation.tabs.products.PanelEditProduct
 import com.bulich.misha.workwithroom.presentation.tabs.products.ProductsAdapter
 import com.bulich.misha.workwithroom.presentation.tabs.products.ProductsViewModel
@@ -24,7 +24,7 @@ import com.bulich.misha.workwithroom.presentation.tabs.products.ProductsViewMode
 class CatalogClothes : Fragment() {
 
     private var binding: CatalogClothesBinding? = null
-    private var productsRepository: ProductsRepository? = null
+    private var productsRepositoryIMPL: ProductsRepositoryIMPL? = null
     private var productsViewModel: ProductsViewModel? = null
     private var productsViewModelFactory: ProductsViewModelFactory? = null
     private var productsAdapter: ProductsAdapter? = null
@@ -38,8 +38,8 @@ class CatalogClothes : Fragment() {
 
         val productsDao =
             ProductsDatabase.getInstance((context as FragmentActivity).application).products()
-        productsRepository = ProductsRepository(productsDao)
-        productsViewModelFactory = ProductsViewModelFactory(productsRepository!!)
+        productsRepositoryIMPL = ProductsRepositoryIMPL(productsDao)
+        productsViewModelFactory = ProductsViewModelFactory(productsRepositoryIMPL!!)
         productsViewModel =
             ViewModelProvider(this, productsViewModelFactory!!).get(ProductsViewModel::class.java)
 

@@ -4,16 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bulich.misha.workwithroom.data.db.Products
-import com.bulich.misha.workwithroom.data.db.ProductsRepository
+import com.bulich.misha.workwithroom.data.db.ProductsRepositoryIMPL
 import kotlinx.coroutines.launch
 
-class ProductsViewModel(private val productsRepository: ProductsRepository) : ViewModel() {
+class ProductsViewModel(private val productsRepositoryIMPL: ProductsRepositoryIMPL) : ViewModel() {
 
-    val products = productsRepository.products
+    val products = productsRepositoryIMPL.products
 
     fun getFilter (nameCategory:String, priceProduct:String):
             LiveData<List<Products>> {
-        return productsRepository.getFilter(nameCategory, priceProduct)
+        return productsRepositoryIMPL.getFilter(nameCategory, priceProduct)
     }
 
     fun startInsert(nameProduct:String, categoryProduct:String, priceProduct:String) {
@@ -26,21 +26,21 @@ class ProductsViewModel(private val productsRepository: ProductsRepository) : Vi
 
     fun insertProduct(products: Products) = viewModelScope.launch{
 
-        productsRepository.insertProduct(products)
+        productsRepositoryIMPL.insertProduct(products)
     }
 
     fun updateProduct(products: Products) = viewModelScope.launch{
 
-        productsRepository.updateProduct(products)
+        productsRepositoryIMPL.updateProduct(products)
     }
 
     fun deleteProduct(products: Products) = viewModelScope.launch{
 
-        productsRepository.deleteProduct(products)
+        productsRepositoryIMPL.deleteProduct(products)
     }
 
     fun deleteAllProducts() = viewModelScope.launch{
 
-        productsRepository.deleteAllProducts()
+        productsRepositoryIMPL.deleteAllProducts()
     }
 }

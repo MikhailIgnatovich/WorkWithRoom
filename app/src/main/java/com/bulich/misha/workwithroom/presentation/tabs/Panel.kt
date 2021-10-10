@@ -11,9 +11,9 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bulich.misha.workwithroom.R
 import com.bulich.misha.workwithroom.databinding.PanelBinding
-import com.bulich.misha.workwithroom.data.db.CategoriesRepository
+import com.bulich.misha.workwithroom.data.db.CategoriesRepositoryIMPL
 import com.bulich.misha.workwithroom.data.db.ProductsDatabase
-import com.bulich.misha.workwithroom.data.db.ProductsRepository
+import com.bulich.misha.workwithroom.data.db.ProductsRepositoryIMPL
 import com.bulich.misha.workwithroom.presentation.tabs.categories.CategoriesViewModel
 import com.bulich.misha.workwithroom.presentation.tabs.categories.CategoriesViewModelFactory
 import com.bulich.misha.workwithroom.presentation.tabs.products.ProductsViewModel
@@ -24,10 +24,10 @@ class Panel : Fragment(), View.OnKeyListener, View.OnClickListener {
 
     private var binding: PanelBinding? = null
 
-    private var categoriesRepository: CategoriesRepository? = null
+    private var categoriesRepositoryIMPL: CategoriesRepositoryIMPL? = null
     private var categoriesViewModel: CategoriesViewModel? = null
 
-    private var productsRepository: ProductsRepository? = null
+    private var productsRepositoryIMPL: ProductsRepositoryIMPL? = null
     private var productsViewModel: ProductsViewModel? = null
 
     override fun onCreateView(
@@ -39,15 +39,15 @@ class Panel : Fragment(), View.OnKeyListener, View.OnClickListener {
 
         val categoriesDao =
             ProductsDatabase.getInstance((context as FragmentActivity).application).categoriesDao()
-        categoriesRepository = CategoriesRepository(categoriesDao)
-        val factoryCategories = CategoriesViewModelFactory(categoriesRepository!!)
+        categoriesRepositoryIMPL = CategoriesRepositoryIMPL(categoriesDao)
+        val factoryCategories = CategoriesViewModelFactory(categoriesRepositoryIMPL!!)
         categoriesViewModel =
             ViewModelProvider(this, factoryCategories).get(CategoriesViewModel::class.java)
 
         val productsDao =
             ProductsDatabase.getInstance((context as FragmentActivity).application).products()
-        productsRepository = ProductsRepository(productsDao)
-        val factoryProducts = ProductsViewModelFactory(productsRepository!!)
+        productsRepositoryIMPL = ProductsRepositoryIMPL(productsDao)
+        val factoryProducts = ProductsViewModelFactory(productsRepositoryIMPL!!)
         productsViewModel =
             ViewModelProvider(this, factoryProducts).get(ProductsViewModel::class.java)
 

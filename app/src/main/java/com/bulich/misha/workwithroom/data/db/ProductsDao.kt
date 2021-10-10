@@ -24,9 +24,9 @@ interface ProductsDao {
     @Query("SELECT * FROM products_data_table WHERE products_category = :nameCategory AND products_price = :priceProduct")
     fun getFilter(nameCategory: String, priceProduct: String): LiveData<List<Products>>
 
-    @Query("SELECT * FROM products_data_table WHERE products_category = 'Аксессуары' AND products_price = '5000'")
-    fun getAccess(): LiveData<List<Products>>
-
-    @Query("SELECT * FROM products_data_table WHERE products_category = :nameCategoryVariantOne OR products_category = :nameCategoryVariantTwo")
-    fun getThreeVariant(nameCategoryVariantOne:String, nameCategoryVariantTwo:String): LiveData<List<Products>>
+//    @Query("SELECT * FROM products_data_table WHERE products_category = 'Аксессуары' AND products_price = '5000'")
+//    fun getAccess(): LiveData<List<Products>>
+//
+//    @Query("SELECT * FROM products_data_table WHERE products_category = :nameCategoryVariantOne OR products_category = :nameCategoryVariantTwo")
+//    fun getThreeVariant(nameCategoryVariantOne:String, nameCategoryVariantTwo:String): LiveData<List<Products>>
 }

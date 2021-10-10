@@ -13,13 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bulich.misha.workwithroom.R
 import com.bulich.misha.workwithroom.databinding.CatalogCategoriesBinding
 import com.bulich.misha.workwithroom.data.db.Categories
-import com.bulich.misha.workwithroom.data.db.CategoriesRepository
+import com.bulich.misha.workwithroom.data.db.CategoriesRepositoryIMPL
 import com.bulich.misha.workwithroom.data.db.ProductsDatabase
 
 class CatalogCategories : Fragment(), View.OnClickListener {
 
     private var binding: CatalogCategoriesBinding? = null
-    private var categoriesRepository: CategoriesRepository? = null
+    private var categoriesRepositoryIMPL: CategoriesRepositoryIMPL? = null
     private var categoriesViewModel: CategoriesViewModel? = null
     private var categoriesViewModelFactory: CategoriesViewModelFactory? = null
     private var categoriesAdapter: CategoriesAdapter? = null
@@ -32,8 +32,8 @@ class CatalogCategories : Fragment(), View.OnClickListener {
         binding = DataBindingUtil.inflate(inflater, R.layout.catalog_categories, container, false)
         val categoriesDao =
             ProductsDatabase.getInstance((context as FragmentActivity).application).categoriesDao()
-        categoriesRepository = CategoriesRepository(categoriesDao)
-        categoriesViewModelFactory = CategoriesViewModelFactory(categoriesRepository!!)
+        categoriesRepositoryIMPL = CategoriesRepositoryIMPL(categoriesDao)
+        categoriesViewModelFactory = CategoriesViewModelFactory(categoriesRepositoryIMPL!!)
         categoriesViewModel = ViewModelProvider(
             this,
             categoriesViewModelFactory!!

@@ -14,13 +14,13 @@ import com.bulich.misha.workwithroom.R
 import com.bulich.misha.workwithroom.databinding.CatalogProductsBinding
 import com.bulich.misha.workwithroom.data.db.Products
 import com.bulich.misha.workwithroom.data.db.ProductsDatabase
-import com.bulich.misha.workwithroom.data.db.ProductsRepository
+import com.bulich.misha.workwithroom.data.db.ProductsRepositoryIMPL
 
 
 class CatalogProducts : Fragment(), View.OnClickListener {
 
     private var binding: CatalogProductsBinding? = null
-    private var productsRepository: ProductsRepository? = null
+    private var productsRepositoryIMPL: ProductsRepositoryIMPL? = null
     private var productsViewModel: ProductsViewModel? = null
     private var productsViewModelFactory: ProductsViewModelFactory? = null
     private var productsAdapter: ProductsAdapter? = null
@@ -34,8 +34,8 @@ class CatalogProducts : Fragment(), View.OnClickListener {
         binding = DataBindingUtil.inflate(inflater, R.layout.catalog_products, container, false)
         val productsDao =
             ProductsDatabase.getInstance((context as FragmentActivity).application).products()
-        productsRepository = ProductsRepository(productsDao)
-        productsViewModelFactory = ProductsViewModelFactory(productsRepository!!)
+        productsRepositoryIMPL = ProductsRepositoryIMPL(productsDao)
+        productsViewModelFactory = ProductsViewModelFactory(productsRepositoryIMPL!!)
         productsViewModel =
             ViewModelProvider(this, productsViewModelFactory!!).get(ProductsViewModel::class.java)
         initRecyclerProducts()
