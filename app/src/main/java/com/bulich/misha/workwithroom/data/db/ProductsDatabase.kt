@@ -1,4 +1,4 @@
-package com.bulich.misha.workwithroom.db
+package com.bulich.misha.workwithroom.data.db
 
 import android.content.Context
 import androidx.room.Database

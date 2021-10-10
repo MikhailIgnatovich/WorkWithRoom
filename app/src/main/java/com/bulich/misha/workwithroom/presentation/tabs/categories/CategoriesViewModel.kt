@@ -1,9 +1,9 @@
-package com.bulich.misha.workwithroom.tabs.categories
+package com.bulich.misha.workwithroom.presentation.tabs.categories
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bulich.misha.workwithroom.db.Categories
-import com.bulich.misha.workwithroom.db.CategoriesRepository
+import com.bulich.misha.workwithroom.data.db.Categories
+import com.bulich.misha.workwithroom.data.db.CategoriesRepository
 import kotlinx.coroutines.launch
 
 class CategoriesViewModel(private val categoriesRepository: CategoriesRepository) : ViewModel() {

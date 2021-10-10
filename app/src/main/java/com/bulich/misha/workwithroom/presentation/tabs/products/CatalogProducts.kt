@@ -1,4 +1,4 @@
-package com.bulich.misha.workwithroom.tabs.products
+package com.bulich.misha.workwithroom.presentation.tabs.products
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,9 +12,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bulich.misha.workwithroom.R
 import com.bulich.misha.workwithroom.databinding.CatalogProductsBinding
-import com.bulich.misha.workwithroom.db.Products
-import com.bulich.misha.workwithroom.db.ProductsDatabase
-import com.bulich.misha.workwithroom.db.ProductsRepository
+import com.bulich.misha.workwithroom.data.db.Products
+import com.bulich.misha.workwithroom.data.db.ProductsDatabase
+import com.bulich.misha.workwithroom.data.db.ProductsRepository
 
 
 class CatalogProducts : Fragment(), View.OnClickListener {

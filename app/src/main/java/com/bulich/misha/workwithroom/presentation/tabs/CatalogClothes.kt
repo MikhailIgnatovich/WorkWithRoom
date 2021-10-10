@@ -1,4 +1,4 @@
-package com.bulich.misha.workwithroom.tabs
+package com.bulich.misha.workwithroom.presentation.tabs
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,13 +12,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bulich.misha.workwithroom.R
 import com.bulich.misha.workwithroom.databinding.CatalogClothesBinding
-import com.bulich.misha.workwithroom.db.Products
-import com.bulich.misha.workwithroom.db.ProductsDatabase
-import com.bulich.misha.workwithroom.db.ProductsRepository
-import com.bulich.misha.workwithroom.tabs.products.PanelEditProduct
-import com.bulich.misha.workwithroom.tabs.products.ProductsAdapter
-import com.bulich.misha.workwithroom.tabs.products.ProductsViewModel
-import com.bulich.misha.workwithroom.tabs.products.ProductsViewModelFactory
+import com.bulich.misha.workwithroom.data.db.Products
+import com.bulich.misha.workwithroom.data.db.ProductsDatabase
+import com.bulich.misha.workwithroom.data.db.ProductsRepository
+import com.bulich.misha.workwithroom.presentation.tabs.products.PanelEditProduct
+import com.bulich.misha.workwithroom.presentation.tabs.products.ProductsAdapter
+import com.bulich.misha.workwithroom.presentation.tabs.products.ProductsViewModel
+import com.bulich.misha.workwithroom.presentation.tabs.products.ProductsViewModelFactory
 
 
 class CatalogClothes : Fragment() {
