@@ -2,27 +2,29 @@ package com.bulich.misha.workwithroom.data.db
 
 import androidx.lifecycle.LiveData
 import com.bulich.misha.workwithroom.domain.repository.CategoriesRepository
+import javax.inject.Inject
 
-class CategoriesRepositoryIMPL(private val categoriesDao: CategoriesDao) : CategoriesRepository {
+class CategoriesRepositoryIMPL @Inject constructor(private val categoriesDao: CategoriesDao) :
+    CategoriesRepository {
 
     override suspend fun insertCategory(categories: Categories) {
-        TODO("Not yet implemented")
+        categoriesDao.insertCategory(categories)
     }
 
     override suspend fun updateCategory(categories: Categories) {
-        TODO("Not yet implemented")
+        categoriesDao.updateCategory(categories)
     }
 
     override suspend fun deleteCategory(categories: Categories) {
-        TODO("Not yet implemented")
+        categoriesDao.deleteCategory(categories)
     }
 
     override suspend fun deleteAllCategories() {
-        TODO("Not yet implemented")
+        categoriesDao.deleteAllCategories()
     }
 
     override fun getAllCategories(): LiveData<List<Categories>> {
-        TODO("Not yet implemented")
+        return categoriesDao.getAllCategories()
     }
 
 

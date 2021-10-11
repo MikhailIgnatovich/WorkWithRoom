@@ -1,5 +1,6 @@
 package com.bulich.misha.workwithroom.presentation.tabs
 
+import android.content.Context
 import android.os.Bundle
 import android.view.KeyEvent
 import androidx.fragment.app.Fragment
@@ -14,21 +15,34 @@ import com.bulich.misha.workwithroom.databinding.PanelBinding
 import com.bulich.misha.workwithroom.data.db.CategoriesRepositoryIMPL
 import com.bulich.misha.workwithroom.data.db.ProductsDatabase
 import com.bulich.misha.workwithroom.data.db.ProductsRepositoryIMPL
+import com.bulich.misha.workwithroom.presentation.appComponent
 import com.bulich.misha.workwithroom.presentation.tabs.categories.CategoriesViewModel
 import com.bulich.misha.workwithroom.presentation.tabs.categories.CategoriesViewModelFactory
 import com.bulich.misha.workwithroom.presentation.tabs.products.ProductsViewModel
 import com.bulich.misha.workwithroom.presentation.tabs.products.ProductsViewModelFactory
+import javax.inject.Inject
 
 
 class Panel : Fragment(), View.OnKeyListener, View.OnClickListener {
 
     private var binding: PanelBinding? = null
 
-    private var categoriesRepositoryIMPL: CategoriesRepositoryIMPL? = null
-    private var categoriesViewModel: CategoriesViewModel? = null
+    @Inject
+    lateinit var categoriesViewModelFactory: CategoriesViewModelFactory
+    private val categoriesViewModel: CategoriesViewModel by lazy {
+        ViewModelProvider(this, categoriesViewModelFactory)[CategoriesViewModel::class.java]
+    }
 
-    private var productsRepositoryIMPL: ProductsRepositoryIMPL? = null
-    private var productsViewModel: ProductsViewModel? = null
+    @Inject
+    lateinit var productsViewModelFactory: ProductsViewModelFactory
+    private val productsViewModel: ProductsViewModel by lazy {
+        ViewModelProvider(this, productsViewModelFactory)[ProductsViewModel::class.java]
+    }
+
+    override fun onAttach(context: Context) {
+        context.appComponent.inject(this)
+        super.onAttach(context)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,20 +50,6 @@ class Panel : Fragment(), View.OnKeyListener, View.OnClickListener {
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.panel, container, false)
-
-        val categoriesDao =
-            ProductsDatabase.getInstance((context as FragmentActivity).application).categoriesDao()
-        categoriesRepositoryIMPL = CategoriesRepositoryIMPL(categoriesDao)
-        val factoryCategories = CategoriesViewModelFactory(categoriesRepositoryIMPL!!)
-        categoriesViewModel =
-            ViewModelProvider(this, factoryCategories).get(CategoriesViewModel::class.java)
-
-        val productsDao =
-            ProductsDatabase.getInstance((context as FragmentActivity).application).products()
-        productsRepositoryIMPL = ProductsRepositoryIMPL(productsDao)
-        val factoryProducts = ProductsViewModelFactory(productsRepositoryIMPL!!)
-        productsViewModel =
-            ViewModelProvider(this, factoryProducts).get(ProductsViewModel::class.java)
 
         binding?.enterCategoryProduct?.setOnKeyListener(this)
         binding?.enterNameProduct?.setOnKeyListener(this)
@@ -97,19 +97,19 @@ class Panel : Fragment(), View.OnKeyListener, View.OnClickListener {
         when (v.id) {
 
             R.id.buttonAddCategoryClothes -> {
-                categoriesViewModel?.startInsert(binding?.buttonAddCategoryClothes?.text?.toString()!!)
+                categoriesViewModel.startInsert(binding?.buttonAddCategoryClothes?.text?.toString()!!)
             }
 
             R.id.buttonAddCategoryShoes -> {
-                categoriesViewModel?.startInsert(binding?.buttonAddCategoryShoes?.text?.toString()!!)
+                categoriesViewModel.startInsert(binding?.buttonAddCategoryShoes?.text?.toString()!!)
             }
 
             R.id.buttonAddCategoryAccessories -> {
-                categoriesViewModel?.startInsert(binding?.buttonAddCategoryAccessories?.text?.toString()!!)
+                categoriesViewModel.startInsert(binding?.buttonAddCategoryAccessories?.text?.toString()!!)
             }
 
             R.id.buttonAddProduct -> {
-                productsViewModel?.startInsert(
+                productsViewModel.startInsert(
                     binding?.resEnterNameProduct?.text?.toString()!!,
                     binding?.resEnterCategoryProduct?.text?.toString()!!,
                     binding?.resEnterPriceProduct?.text?.toString()!!

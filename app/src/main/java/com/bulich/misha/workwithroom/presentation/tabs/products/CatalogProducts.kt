@@ -1,5 +1,6 @@
 package com.bulich.misha.workwithroom.presentation.tabs.products
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,15 +16,24 @@ import com.bulich.misha.workwithroom.databinding.CatalogProductsBinding
 import com.bulich.misha.workwithroom.data.db.Products
 import com.bulich.misha.workwithroom.data.db.ProductsDatabase
 import com.bulich.misha.workwithroom.data.db.ProductsRepositoryIMPL
+import com.bulich.misha.workwithroom.presentation.appComponent
+import javax.inject.Inject
 
 
 class CatalogProducts : Fragment(), View.OnClickListener {
 
     private var binding: CatalogProductsBinding? = null
-    private var productsRepositoryIMPL: ProductsRepositoryIMPL? = null
-    private var productsViewModel: ProductsViewModel? = null
-    private var productsViewModelFactory: ProductsViewModelFactory? = null
+    private val productsViewModel: ProductsViewModel by lazy {
+        ViewModelProvider(this, productsViewModelFactory)[ProductsViewModel::class.java]
+    }
+    @Inject
+    lateinit var productsViewModelFactory: ProductsViewModelFactory
     private var productsAdapter: ProductsAdapter? = null
+
+    override fun onAttach(context: Context) {
+        context.appComponent.inject(this)
+        super.onAttach(context)
+    }
 
 
     override fun onCreateView(
@@ -32,12 +42,7 @@ class CatalogProducts : Fragment(), View.OnClickListener {
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.catalog_products, container, false)
-        val productsDao =
-            ProductsDatabase.getInstance((context as FragmentActivity).application).products()
-        productsRepositoryIMPL = ProductsRepositoryIMPL(productsDao)
-        productsViewModelFactory = ProductsViewModelFactory(productsRepositoryIMPL!!)
-        productsViewModel =
-            ViewModelProvider(this, productsViewModelFactory!!).get(ProductsViewModel::class.java)
+
         initRecyclerProducts()
 
         binding?.deleteAllProducts?.setOnClickListener(this)
@@ -55,7 +60,7 @@ class CatalogProducts : Fragment(), View.OnClickListener {
     }
 
     private fun displayProduct() {
-        productsViewModel?.products?.observe(viewLifecycleOwner, Observer {
+        productsViewModel.products.observe(viewLifecycleOwner, Observer {
             productsAdapter?.setList(it)
             productsAdapter?.notifyDataSetChanged()
         })
@@ -76,10 +81,10 @@ class CatalogProducts : Fragment(), View.OnClickListener {
     }
 
     private fun deleteProduct(products: Products) {
-        productsViewModel?.deleteProduct(products)
+        productsViewModel.deleteProduct(products)
     }
 
     override fun onClick(v: View?) {
-        productsViewModel?.deleteAllProducts()
+        productsViewModel.deleteAllProducts()
     }
 }

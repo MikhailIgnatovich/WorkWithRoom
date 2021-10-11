@@ -2,31 +2,32 @@ package com.bulich.misha.workwithroom.data.db
 
 import androidx.lifecycle.LiveData
 import com.bulich.misha.workwithroom.domain.repository.ProductsRepository
+import javax.inject.Inject
 
-class ProductsRepositoryIMPL(private val productsDao: ProductsDao) : ProductsRepository {
+class ProductsRepositoryIMPL @Inject constructor(private val productsDao: ProductsDao) : ProductsRepository {
 
     override suspend fun insertProduct(products: Products) {
-        TODO("Not yet implemented")
+        productsDao.insertProduct(products)
     }
 
     override suspend fun updateProduct(products: Products) {
-        TODO("Not yet implemented")
+        productsDao.updateProduct(products)
     }
 
     override suspend fun deleteProduct(products: Products) {
-        TODO("Not yet implemented")
+        productsDao.deleteProduct(products)
     }
 
     override suspend fun deleteAllProducts() {
-        TODO("Not yet implemented")
+        productsDao.deleteAllProducts()
     }
 
     override fun getAllProducts(): LiveData<List<Products>> {
-        TODO("Not yet implemented")
+        return productsDao.getAllProducts()
     }
 
     override fun getFilter(nameCategory: String, priceProduct: String): LiveData<List<Products>> {
-        TODO("Not yet implemented")
+        return productsDao.getFilter(nameCategory, priceProduct)
     }
 
 

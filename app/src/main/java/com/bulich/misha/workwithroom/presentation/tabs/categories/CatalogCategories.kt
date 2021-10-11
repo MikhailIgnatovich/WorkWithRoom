@@ -1,5 +1,6 @@
 package com.bulich.misha.workwithroom.presentation.tabs.categories
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,14 +16,24 @@ import com.bulich.misha.workwithroom.databinding.CatalogCategoriesBinding
 import com.bulich.misha.workwithroom.data.db.Categories
 import com.bulich.misha.workwithroom.data.db.CategoriesRepositoryIMPL
 import com.bulich.misha.workwithroom.data.db.ProductsDatabase
+import com.bulich.misha.workwithroom.presentation.MyApp
+import com.bulich.misha.workwithroom.presentation.appComponent
+import javax.inject.Inject
 
 class CatalogCategories : Fragment(), View.OnClickListener {
 
     private var binding: CatalogCategoriesBinding? = null
-    private var categoriesRepositoryIMPL: CategoriesRepositoryIMPL? = null
-    private var categoriesViewModel: CategoriesViewModel? = null
-    private var categoriesViewModelFactory: CategoriesViewModelFactory? = null
+    private val categoriesViewModel: CategoriesViewModel by lazy {
+        ViewModelProvider(this, categoriesViewModelFactory)[CategoriesViewModel::class.java]
+    }
+    @Inject
+    lateinit var categoriesViewModelFactory: CategoriesViewModelFactory
     private var categoriesAdapter: CategoriesAdapter? = null
+
+    override fun onAttach(context: Context) {
+        context.appComponent.inject(this)
+        super.onAttach(context)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,14 +41,7 @@ class CatalogCategories : Fragment(), View.OnClickListener {
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.catalog_categories, container, false)
-        val categoriesDao =
-            ProductsDatabase.getInstance((context as FragmentActivity).application).categoriesDao()
-        categoriesRepositoryIMPL = CategoriesRepositoryIMPL(categoriesDao)
-        categoriesViewModelFactory = CategoriesViewModelFactory(categoriesRepositoryIMPL!!)
-        categoriesViewModel = ViewModelProvider(
-            this,
-            categoriesViewModelFactory!!
-        ).get(CategoriesViewModel::class.java)
+
         initRecyclerCategories()
 
         binding?.deleteAllCategories?.setOnClickListener(this)
@@ -62,22 +66,25 @@ class CatalogCategories : Fragment(), View.OnClickListener {
         val parameters = Bundle()
         parameters.putString("idCategory", categories.id.toString())
         parameters.putString("nameCategory", categories.name)
+        panelCategories.apply {
+            arguments = parameters
+        }
 
         panelCategories.show((context as FragmentActivity).supportFragmentManager, "editCategory")
     }
 
     private fun deleteCategory(categories: Categories) {
-        categoriesViewModel?.deleteCategories(categories)
+        categoriesViewModel.deleteCategories(categories)
     }
 
     private fun displayList() {
-        categoriesViewModel?.categories?.observe(viewLifecycleOwner, Observer {
+        categoriesViewModel.categories.observe(viewLifecycleOwner, Observer {
             categoriesAdapter?.setList(it)
             categoriesAdapter?.notifyDataSetChanged()
         })
     }
 
     override fun onClick(v: View?) {
-        categoriesViewModel?.deleteAllCategories()
+        categoriesViewModel.deleteAllCategories()
     }
 }

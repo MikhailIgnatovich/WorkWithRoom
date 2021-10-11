@@ -1,5 +1,6 @@
 package com.bulich.misha.workwithroom.presentation.tabs.categories
 
+import android.content.Context
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -12,15 +13,25 @@ import com.bulich.misha.workwithroom.R
 import com.bulich.misha.workwithroom.databinding.PanelEditCategoryBinding
 import com.bulich.misha.workwithroom.data.db.CategoriesRepositoryIMPL
 import com.bulich.misha.workwithroom.data.db.ProductsDatabase
+import com.bulich.misha.workwithroom.presentation.appComponent
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import javax.inject.Inject
 
 
 class PanelEditCategory : BottomSheetDialogFragment(), View.OnKeyListener {
 
     private var binding: PanelEditCategoryBinding? = null
-    private var categoriesRepositoryIMPL: CategoriesRepositoryIMPL? = null
-    private var categoriesViewModel: CategoriesViewModel? = null
+    @Inject
+    lateinit var categoriesViewModelFactory: CategoriesViewModelFactory
+    private val categoriesViewModel: CategoriesViewModel by lazy {
+        ViewModelProvider(this, categoriesViewModelFactory)[CategoriesViewModel::class.java]
+    }
     private var idCategory: Int? = null
+
+    override fun onAttach(context: Context) {
+        context.appComponent.inject(this)
+        super.onAttach(context)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,11 +39,8 @@ class PanelEditCategory : BottomSheetDialogFragment(), View.OnKeyListener {
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.panel_edit_category, container, false)
-        val categoriesDao =
-            ProductsDatabase.getInstance((context as FragmentActivity).application).categoriesDao()
-        categoriesRepositoryIMPL = CategoriesRepositoryIMPL(categoriesDao)
-        val factory = CategoriesViewModelFactory(categoriesRepositoryIMPL!!)
-        categoriesViewModel = ViewModelProvider(this, factory).get(CategoriesViewModel::class.java)
+        idCategory = requireArguments().getString("idCategory")?.toInt()
+
 
         binding?.editCategory?.setOnKeyListener(this)
         return binding?.root
@@ -43,7 +51,7 @@ class PanelEditCategory : BottomSheetDialogFragment(), View.OnKeyListener {
             R.id.editCategory -> {
                 if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
 
-                    categoriesViewModel?.startUpdate(
+                    categoriesViewModel.startUpdate(
                         idCategory.toString().toInt(),
                         binding?.editCategory?.text?.toString()!!
                     )

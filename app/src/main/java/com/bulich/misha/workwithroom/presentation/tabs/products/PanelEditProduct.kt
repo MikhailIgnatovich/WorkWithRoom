@@ -1,5 +1,6 @@
 package com.bulich.misha.workwithroom.presentation.tabs.products
 
+import android.content.Context
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -12,16 +13,25 @@ import com.bulich.misha.workwithroom.R
 import com.bulich.misha.workwithroom.databinding.PanelEditProductBinding
 import com.bulich.misha.workwithroom.data.db.ProductsDatabase
 import com.bulich.misha.workwithroom.data.db.ProductsRepositoryIMPL
+import com.bulich.misha.workwithroom.presentation.appComponent
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import javax.inject.Inject
 
 
 class PanelEditProduct : BottomSheetDialogFragment(), View.OnClickListener, View.OnKeyListener {
 
     private var binding: PanelEditProductBinding? = null
-    private var productRepositoryIMPL: ProductsRepositoryIMPL? = null
-    private var productsViewModel: ProductsViewModel? = null
-    private var productsViewModelFactory: ProductsViewModelFactory? = null
+    private val productsViewModel: ProductsViewModel by lazy {
+        ViewModelProvider(this, productsViewModelFactory)[ProductsViewModel::class.java]
+    }
+    @Inject
+    lateinit var productsViewModelFactory: ProductsViewModelFactory
     private var idProduct: Int? = null
+
+    override fun onAttach(context: Context) {
+        context.appComponent.inject(this)
+        super.onAttach(context)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,12 +45,6 @@ class PanelEditProduct : BottomSheetDialogFragment(), View.OnClickListener, View
         binding?.editCategoryProduct?.setText(arguments?.getString("categoryProduct"))
         binding?.editPriceProduct?.setText(arguments?.getString("priceProduct"))
 
-        val productDao =
-            ProductsDatabase.getInstance((context as FragmentActivity).application).products()
-        productRepositoryIMPL = ProductsRepositoryIMPL(productDao)
-        productsViewModelFactory = ProductsViewModelFactory(productRepositoryIMPL!!)
-        productsViewModel =
-            ViewModelProvider(this, productsViewModelFactory!!).get(ProductsViewModel::class.java)
 
         binding?.buttonEditProduct?.setOnClickListener(this)
 
@@ -54,7 +58,7 @@ class PanelEditProduct : BottomSheetDialogFragment(), View.OnClickListener, View
     }
 
     override fun onClick(v: View?) {
-        productsViewModel?.startUpdateProduct(
+        productsViewModel.startUpdateProduct(
             idProduct.toString().toInt(),
             binding?.resEditNameProduct?.text.toString(),
             binding?.resEditCategoryProduct?.text.toString(),

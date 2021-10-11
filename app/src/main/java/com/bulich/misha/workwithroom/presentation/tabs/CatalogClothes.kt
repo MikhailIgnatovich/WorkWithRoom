@@ -1,5 +1,6 @@
 package com.bulich.misha.workwithroom.presentation.tabs
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,19 +16,29 @@ import com.bulich.misha.workwithroom.databinding.CatalogClothesBinding
 import com.bulich.misha.workwithroom.data.db.Products
 import com.bulich.misha.workwithroom.data.db.ProductsDatabase
 import com.bulich.misha.workwithroom.data.db.ProductsRepositoryIMPL
+import com.bulich.misha.workwithroom.presentation.appComponent
 import com.bulich.misha.workwithroom.presentation.tabs.products.PanelEditProduct
 import com.bulich.misha.workwithroom.presentation.tabs.products.ProductsAdapter
 import com.bulich.misha.workwithroom.presentation.tabs.products.ProductsViewModel
 import com.bulich.misha.workwithroom.presentation.tabs.products.ProductsViewModelFactory
+import javax.inject.Inject
 
 
 class CatalogClothes : Fragment() {
 
     private var binding: CatalogClothesBinding? = null
-    private var productsRepositoryIMPL: ProductsRepositoryIMPL? = null
-    private var productsViewModel: ProductsViewModel? = null
-    private var productsViewModelFactory: ProductsViewModelFactory? = null
+
+    private val productsViewModel: ProductsViewModel by lazy {
+        ViewModelProvider(this, productsViewModelFactory)[ProductsViewModel::class.java]
+    }
+    @Inject
+    lateinit var productsViewModelFactory: ProductsViewModelFactory
     private var productsAdapter: ProductsAdapter? = null
+
+    override fun onAttach(context: Context) {
+        context.appComponent.inject(this)
+        super.onAttach(context)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,13 +46,6 @@ class CatalogClothes : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.catalog_clothes, container, false)
-
-        val productsDao =
-            ProductsDatabase.getInstance((context as FragmentActivity).application).products()
-        productsRepositoryIMPL = ProductsRepositoryIMPL(productsDao)
-        productsViewModelFactory = ProductsViewModelFactory(productsRepositoryIMPL!!)
-        productsViewModel =
-            ViewModelProvider(this, productsViewModelFactory!!).get(ProductsViewModel::class.java)
 
         initRecyclerClothes()
 
@@ -57,7 +61,7 @@ class CatalogClothes : Fragment() {
     }
 
     private fun displayProducts() {
-        productsViewModel?.getFilter("одежда", "5000")?.observe(viewLifecycleOwner, Observer {
+        productsViewModel.getFilter("одежда", "5000").observe(viewLifecycleOwner, Observer {
             productsAdapter?.setList(it)
             productsAdapter?.notifyDataSetChanged()
         })
@@ -76,6 +80,6 @@ class CatalogClothes : Fragment() {
     }
 
     private fun deleteProduct(products: Products) {
-        productsViewModel?.deleteProduct(products)
+        productsViewModel.deleteProduct(products)
     }
 }
